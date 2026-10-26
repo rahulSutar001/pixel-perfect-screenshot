@@ -22,7 +22,7 @@ const fmtDate = (d: string) => {
 
 function ChartTooltip({ active, payload }: TooltipProps<number, string>) {
   if (!active || !payload?.length) return null;
-  const p = payload[0].payload as SeriesPoint;
+  const p = payload[0]!.payload as SeriesPoint;
   return (
     <div className="num min-w-48 rounded-md border bg-popover p-3 text-xs shadow-xl">
       <div className="mb-2 font-sans font-medium text-foreground">
@@ -52,8 +52,8 @@ export function RiskChart({ height = 440 }: { height?: number }) {
   const { visible, annotations, window } = useTracker();
   const data = useMemo(() => downsample(visible), [visible]);
   if (!data.length) return <div className="grid h-64 place-items-center text-muted-foreground">No data in range</div>;
-  const first = data[0].date;
-  const last = data[data.length - 1].date;
+  const first = data[0]!.date;
+  const last = data[data.length - 1]!.date;
   const crises = CRISES.filter((c) => c.end_date >= first && c.start_date <= last);
   const notes = annotations.filter((a) => a.date_targeted >= first && a.date_targeted <= last);
   const snap = (d: string) => data.find((p) => p.date >= d)?.date ?? last;

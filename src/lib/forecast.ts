@@ -22,7 +22,7 @@ export const ewmaForecaster: VolForecaster = {
     let variance = 0;
     for (const p of history) if (p.ret != null) variance = lambda * variance + (1 - lambda) * (p.ret / 100) ** 2;
     const vol = Math.sqrt(variance) * Math.sqrt(252) * 100;
-    const last = new Date(history[history.length - 1].date);
+    const last = new Date(history[history.length - 1]!.date);
     return Array.from({ length: horizon }, (_, i) => {
       const d = new Date(last);
       d.setUTCDate(d.getUTCDate() + i + 1);

@@ -10,7 +10,7 @@ describe("computeVolatility", () => {
   it("annualised vol = sample stdev of window returns * sqrt(252) * 100", () => {
     const closes = [100, 101, 99, 102, 100];
     const { vol } = computeVolatility(closes, 3);
-    const r = [1, 2, 3].map((i) => Math.log(closes[i] / closes[i - 1]));
+    const r = [1, 2, 3].map((i) => Math.log(closes[i]! / closes[i - 1]!));
     const m = r.reduce((a, b) => a + b) / 3;
     const sd = Math.sqrt(r.reduce((a, b) => a + (b - m) ** 2, 0) / 2);
     expect(vol[2]).toBeNull();

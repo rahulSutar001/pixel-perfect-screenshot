@@ -34,7 +34,7 @@ export function ControlBar() {
           <span className="num text-sm normal-case text-vol">{t.window} days</span>
         </div>
         <div className="flex items-center gap-3">
-          <Slider min={10} max={252} step={1} value={[t.window]} onValueChange={([v]) => t.setWindow(v)} className="flex-1" />
+          <Slider min={10} max={252} step={1} value={[t.window]} onValueChange={([v]) => t.setWindow(v ?? 21)} className="flex-1" />
           <div className="flex gap-1">
             {WINDOWS.map((w) => (
               <Button key={w} size="sm" variant={t.window === w ? "default" : "outline"} className="num h-7 px-2 text-xs" onClick={() => t.setWindow(w)}>

@@ -8,7 +8,7 @@ export function StatCards() {
   const vols = visible.map((p) => p.vol).filter((v): v is number => v != null);
   const peak = vols.length ? Math.max(...vols) : 0;
   const avg = vols.length ? vols.reduce((a, b) => a + b, 0) / vols.length : 0;
-  const change = firstClose ? ((last.close - firstClose) / firstClose) * 100 : 0;
+  const change = firstClose ? (((last?.close ?? 0) - firstClose) / firstClose) * 100 : 0;
   const regime = (last?.vol ?? 0) > avg * 1.4 ? "Stressed" : (last?.vol ?? 0) < avg * 0.8 ? "Calm" : "Normal";
 
   const items = [
