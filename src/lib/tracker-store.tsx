@@ -68,7 +68,7 @@ export function TrackerProvider({ children }: { children: ReactNode }) {
 
   const visible = useMemo(() => {
     if (zoom) return series.filter((p) => p.date >= zoom.start && p.date <= zoom.end);
-    const start = presetStart(preset, series[series.length - 1].date);
+    const start = presetStart(preset, series[series.length - 1]!.date);
     return start ? series.filter((p) => p.date >= start) : series;
   }, [series, preset, zoom]);
 

@@ -40,7 +40,7 @@ function Analytics() {
     const bins = Array.from({ length: 41 }, (_, i) => ({ x: +(-5 + i * 0.25).toFixed(2), count: 0 }));
     for (const r of rets) {
       const i = Math.min(40, Math.max(0, Math.round((r + 5) / 0.25)));
-      bins[i].count++;
+      bins[i]!.count++;
     }
     return bins;
   }, [rets]);

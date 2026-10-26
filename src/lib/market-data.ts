@@ -113,7 +113,7 @@ export interface SeriesPoint {
 
 /** Daily log return = ln(Ct/Ct-1); annualised vol = stdev(window) * sqrt(252) * 100 (sample stdev). */
 export function computeVolatility(closes: number[], window: number): { ret: (number | null)[]; vol: (number | null)[] } {
-  const rets: (number | null)[] = closes.map((c, i) => (i === 0 ? null : Math.log(c / closes[i - 1])));
+  const rets: (number | null)[] = closes.map((c, i) => (i === 0 ? null : Math.log(c / closes[i - 1]!)));
   const vol: (number | null)[] = closes.map(() => null);
   let sum = 0;
   let sumSq = 0;
@@ -137,7 +137,7 @@ export function computeVolatility(closes: number[], window: number): { ret: (num
 
 export function buildSeries(rows: MarketRow[], window: number): SeriesPoint[] {
   const { ret, vol } = computeVolatility(rows.map((r) => r.close), window);
-  return rows.map((r, i) => ({ date: r.date, close: r.close, ret: ret[i], vol: vol[i] }));
+  return rows.map((r, i) => ({ date: r.date, close: r.close, ret: ret[i] ?? null, vol: vol[i] ?? null }));
 }
 
 export type RangePreset = "1Y" | "5Y" | "10Y" | "Max";
