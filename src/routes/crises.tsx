@@ -29,7 +29,7 @@ function Crises() {
       CRISES.map((c) => {
         const win = series.filter((p) => p.date >= c.start_date && p.date <= c.end_date);
         if (!win.length) return { c, dd: 0, peakVol: 0, worst: 0, days: 0, recovery: null as number | null };
-        let peak = win[0].close;
+        let peak = win[0]!.close;
         let dd = 0;
         for (const p of win) {
           peak = Math.max(peak, p.close);

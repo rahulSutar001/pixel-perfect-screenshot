@@ -22,7 +22,7 @@ export const Route = createFileRoute("/data")({
 });
 
 function parseCsv(text: string): Partial<MarketRow>[] {
-  const [head, ...lines] = text.trim().split(/\r?\n/);
+  const [head = "", ...lines] = text.trim().split(/\r?\n/);
   const cols = head.split(",").map((c) => c.trim().toLowerCase());
   return lines
     .filter(Boolean)
@@ -43,13 +43,13 @@ function DataCenter() {
   const [busy, setBusy] = useState(false);
   const [drag, setDrag] = useState(false);
   const input = useRef<HTMLInputElement>(null);
-  const connected = Boolean(import.meta.env.VITE_SUPABASE_URL);
+  const connected = Boolean(import.meta.env["VITE_SUPABASE_URL"]);
 
   const handleFile = async (f?: File) => {
     if (!f) return;
-    if (!f.name.endsWith(".csv")) return toast.error("Please upload a .csv file");
+    if (!f.name.endsWith(".csv")) { toast.error("Please upload a .csv file"); return; }
     const parsed = parseCsv(await f.text());
-    if (!parsed.length || !("close" in parsed[0]) || !("date" in parsed[0])) return toast.error("CSV needs at least date and close columns");
+    if (!parsed.length || !("close" in parsed[0]!) || !("date" in parsed[0]!)) { toast.error("CSV needs at least date and close columns"); return; }
     setFileName(f.name);
     setUploaded(parsed);
     toast.success(`Parsed ${parsed.length.toLocaleString()} rows from ${f.name}`);
